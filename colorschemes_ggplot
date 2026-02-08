@@ -1,0 +1,275 @@
+---
+title: "colorschemes"
+output: html_notebook
+---
+
+
+### objects
+
+```{r}
+themeA <- theme_classic()+theme(
+    panel.border = element_blank(),
+    #panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), 
+    panel.grid.major = element_line(size = 0, linetype = 'solid', colour = "grey"),
+    panel.grid.minor = element_line(size = 0, linetype = 'solid', colour = "grey"), 
+    strip.background=element_rect(colour="white", fill="white"),
+    axis.text.x = element_text(size=18, angle = 45, vjust = 0.9, hjust = 1, color = "black"),
+    axis.text.y = element_text(             size=16,             vjust = 0.9, hjust = 1, color = "black"),
+    axis.title.y = element_text(size=18,  color = "black"),
+    axis.title.x = element_text(size=18,  color = "black"),
+    plot.title=element_text(hjust=0.5, size=18),
+    legend.position = "none")
+  
+  themeA_straight_x <- theme_classic()+theme(
+    panel.border = element_blank(),
+    #panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), 
+    panel.grid.major = element_line(size = 0.0625, linetype = 'solid', colour = "grey"),
+    panel.grid.minor = element_line(size = 0.0625, linetype = 'solid', colour = "grey"), 
+    strip.background=element_rect(colour="white", fill="white"),
+    axis.text.x = element_text(size=18,  vjust = 0.9, hjust = 1, color = "black"),
+    axis.text.y = element_text(             size=16,             vjust = 0.9, hjust = 1, color = "black"),
+    axis.title.y = element_text(size=18,  color = "black"),
+    axis.title.x = element_text(size=18,  color = "black"),
+    plot.title=element_text(hjust=0.5, size=18),
+    legend.position = "none")
+  
+  themeB <- theme(
+    panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(), 
+    panel.grid.major = element_line(size = 0.125, linetype = 'solid', colour = "grey"),
+    panel.grid.minor = element_line(size = 0.0625, linetype = 'solid', colour = "grey"), 
+    panel.background = element_rect(fill = "white", colour = "black",size = 0.5, linetype = "solid"), 
+    axis.text.x = element_text(face="bold", size=18, angle = 45, vjust = 0.9, hjust = 1, color = "black"),
+    axis.text.y = element_text(             size=16,             vjust = 0.9, hjust = 1, color = "black"),
+    axis.title.y = element_text(face="bold",size=18,  color = "black"),
+    strip.background = element_blank())
+    
+  themeC <- theme(
+    panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(), 
+    panel.grid.major = element_line(size = 0.125, linetype = 'solid', colour = "grey"),
+    panel.grid.minor = element_line(size = 0.0625, linetype = 'solid', colour = "grey"), 
+    panel.background = element_rect(fill = "white", colour = "black",size = 0.5, linetype = "solid"), 
+    axis.text.x = element_text( size=8, angle = 45, vjust = 0.9, hjust = 1, color = "black"),
+    axis.text.y = element_text( size=8, hjust = 0, vjust = 0.5, color = "black"),
+    axis.title.y = element_text(size=8,  color = "black"),
+    axis.title.x = element_text(size=8,  color = "black"),
+    strip.background = element_blank())
+    
+    
+    themefacetmerge <- theme( panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(), 
+            panel.grid.major = element_line(size = 0.125, linetype = 'solid', colour = "grey"),
+            panel.grid.minor = element_line(size = 0.0625, linetype = 'solid', colour = "grey"), 
+            panel.background = element_rect(fill = "white", colour = "black",size = 0.5, linetype = "solid"), 
+            axis.text.x = element_text(face="bold", size=12, angle = 45, vjust = 0.9, hjust = 1, color = "black"),
+            axis.text.y = element_text(face="bold", size=12,             vjust = 0.9, hjust = 1, color = "black"),
+            panel.spacing = unit(0, units = "cm"), # removes space between panels
+            strip.placement = "outside", # moves the states down
+            strip.background = element_rect(fill = "white")) # removes the background from the state names
+    
+    
+    
+  
+  statsA <-  stat_summary(fun = "median", geom = "bar", fill = "transparent", color = "black", width= 0.4, size = 0.3)
+  statsB <-  stat_summary(fun = median, geom = "errorbar", width = 0.2, color = "black", size = 0.4,
+             fun.max = function(x) median(x) + sd(x) / sqrt(length(x)),                                 # calculates standard error 
+             fun.min = function(x) median(x) - sd(x) / sqrt(length(x)))                                 # calculates standard error 
+  
+  statsC <-  stat_summary(aes(fill=X), fun = "median", geom = "bar", color = "black", width= 0.4, size = 0.3)
+  statsD <-  stat_summary(fun = median,geom = "errorbar", width = 0.2, color = "black", size = 0.4,
+             fun.max = function(x) median(x) + sd(x) / sqrt(length(x)),
+             fun.min = function(x) median(x) - sd(x) / sqrt(length(x)))
+  
+  statsE <-  stat_summary(aes(fill=sex), fun = "median", geom = "bar", color = "black", width= 0.4, size = 0.3)
+  statsF <-  stat_summary(fun = median,geom = "errorbar", width = 0.2, color = "black", size = 0.4,
+             fun.max = function(x) median(x) + sd(x) / sqrt(length(x)),
+             fun.min = function(x) median(x) - sd(x) / sqrt(length(x)))
+  
+  statsG <-  stat_summary(aes(fill=variable), fun = "median", geom = "bar", color = "black", width= 0.4, size = 0.3)
+  statsH <-  stat_summary(fun = median, geom = "errorbar", width = 0.2, color = "black", size = 0.4,
+             fun.max = function(x) median(x) + sd(x) / sqrt(length(x)),
+             fun.min = function(x) median(x) - sd(x) / sqrt(length(x)))
+   
+  statsI <-  stat_summary(aes(fill=condition), fun = "median", geom = "bar", color = "black", width= 0.4, size = 0.3)
+  statsJ <-  stat_summary(fun = median, geom = "errorbar", width = 0.2, color = "black", size = 0.4,
+             fun.max = function(x) median(x) + sd(x) / sqrt(length(x)),
+             fun.min = function(x) median(x) - sd(x) / sqrt(length(x)))
+  
+
+  
+Colors230213 <- c("#3f51b5", "#f37363", "#508c36",  "#fdbf6f", "#759ec3", "#80CDC1","#DFC27D",
+                  "#073763", "#ff5722", "#4caf50", "#f44336", "#c27ba0", "#717c90","#f59294")
+colorA <- scale_fill_manual(values = Colors230213 )
+colorB <- scale_color_manual(values = Colors230213)
+
+Colors230331 <-c("#ffeacf","#836394", "#759ec3", "#f37363","#508c36", "#fdbf6f",
+                 "gray",   "#7c436b",  "#073763", "#d48c84","#9bddb1")  
+colorC <- scale_fill_manual(values = Colors230331)
+colorD <- scale_color_manual(values = Colors230331)
+
+
+Colors230409 <-c("#ffeacf","#508c36","#759ec3","#f37363","#7c436b",  "#fdbf6f",
+                 "gray",   "#9bddb1","#073763","#d48c84","#836394")  
+colorE <- scale_fill_manual(values = Colors230409)
+colorF <- scale_color_manual(values = Colors230409)
+
+
+Colors230410 <-c("#f27d5d","#399b8c") 
+colorG <- scale_fill_manual(values = Colors230410)
+colorH <- scale_color_manual(values = Colors230410)
+
+Colors230409 <-c("#508c36", "#f27d5d", "#ffeacf","#759ec3")  
+colorI <- scale_fill_manual(values = Colors230409)
+colorJ <- scale_color_manual(values = Colors230409)
+
+Colors230423 <-c("#00000000","#00000000","#00000000","#00000000")  
+colorX <- scale_fill_manual(values = Colors230423)
+colorY <- scale_color_manual(values = Colors230423)
+
+
+Colors230528 <-c("#FAD6AF", "#717c90")
+colorK <- scale_fill_manual(values = Colors230528)
+colorL <- scale_color_manual(values = Colors230528)
+
+Colors230528_2 <-c("#ff8b3d", "#474747")
+colorM <- scale_fill_manual(values = Colors230528_2)
+colorN <- scale_color_manual(values = Colors230528_2)
+
+Colors230528_3 <-c( "#ff8b3d","#474747", "#ff8b3d","#474747")
+colorO <- scale_fill_manual(values = Colors230528_3)
+colorP <- scale_color_manual(values = Colors230528_3)
+
+Colors230605 <-c( "#000000","#E69F00","#56B4E9","#009E73","#0072B2","#D55E00","#CC79A7")
+colorQ <- scale_fill_manual(values = Colors230605)
+colorR <- scale_color_manual(values = Colors230605)
+
+Colors230605_2 <-c("#df8879", "#759ec3","#b3bfd1" ,"#991f17", "#d7e1ee", "#c86558" )
+colorS <- scale_fill_manual(values = Colors230605_2)
+colorT <- scale_color_manual(values = Colors230528_2)
+
+Colors230920 <-c("#474747", "#ff8b3d")
+colorU <- scale_fill_manual(values = Colors230920)
+colorV <- scale_color_manual(values = Colors230920)
+
+Colors230528x <-c("#474747", "#ff8b3d","#717c90", "#FAD6AF")
+colorU2 <- scale_fill_manual(values = Colors230528)
+colorV2 <- scale_color_manual(values = Colors230528)
+
+Colors_suffro <-c("#4F9D6F", "#885C94")
+color_sfrgtA <- scale_fill_manual(values = Colors_suffro)
+color_sfrgtB <- scale_color_manual(values = Colors_suffro)
+
+Colors_suffro2 <-c("#53A376","#53A376", "#8D5C97" )
+colorS <- scale_fill_manual(values = Colors_suffro2)
+colorT <- scale_color_manual(values = Colors_suffro2)
+
+Colors_suffro3 <-c("#8D5C97", "#508c36", "#53A376" )
+colorW <- scale_fill_manual(values = Colors_suffro3)
+colorX <- scale_color_manual(values = Colors_suffro3)
+
+Colors_suffro4 <-c("#8D5C97", "black", "#53A376" )
+color_s2 <- scale_fill_manual(values = Colors_suffro4)
+color_s3 <- scale_color_manual(values = Colors_suffro4)
+
+Colors_suffro5 <-c("#8D5C97", "#53A376", "black")
+color_s4 <- scale_fill_manual(values = Colors_suffro5)
+color_s5 <- scale_color_manual(values = Colors_suffro5)
+
+Colors_suffro6 <-c("black", "#53A376", "#8D5C97")
+color_s6 <- scale_fill_manual(values = Colors_suffro6)
+color_s7 <- scale_color_manual(values = Colors_suffro6)
+
+
+Colors_suffroAdd1 <-(c("#5C63B2", "black"))
+color_sfrgtAdd1 <- scale_fill_manual(values = Colors_suffroAdd1)
+color_sfrgtAdd2 <- scale_color_manual(values = Colors_suffroAdd1)
+
+
+Colors_suffroAdd3 <-(c("#405682", "#2a2a2a", "#405682", "#2a2a2a", "#405682", "#2a2a2a")) #"#E8BF7F"
+color_sfrgtAdd3 <- scale_fill_manual(values = Colors_suffroAdd3)
+color_sfrgtAdd4 <- scale_color_manual(values = Colors_suffroAdd3)
+
+Colors_suffroAdd5 <-(c("#2a2a2a", "#405682")) #"#E8BF7F"
+color_sfrgtAdd5 <- scale_fill_manual(values = Colors_suffroAdd5)
+color_sfrgtAdd6 <- scale_color_manual(values = Colors_suffroAdd5)
+
+Colors240726 <- c("#c27ba0", "#FD8060", "#fdbf6f", "#B0D8A4", "#8281A0","#759ec3", "#f59294", "#A7C7E7", "#C9A7C7", "#BFAE9F","#9FC5B8", "#E6B8AF")
+colorAH <- scale_fill_manual(values = Colors240726 )
+colorAH2 <- scale_color_manual(values = Colors240726)
+
+
+gradientA <- scale_fill_gradient2( low = "#f27d5d", mid="white", high="#759ec3",  midpoint = 0.05)
+
+
+pointA <- geom_point( color = "black", size = 2, pch=21, fill = "white")
+jitterA <- geom_jitter( color = "black", size = 3, pch=21, width = 0.1, fill = "white")
+
+pointB <- geom_point( color = "black", size = 3, pch=21, fill = "white")
+pointC <- geom_point( color = "black", size = 4, pch=21, fill = "white")
+
+pointE <- geom_point(aes(shape=X),  color = "black", size = 2, fill = "white") 
+pointEvar <- geom_point(aes(shape=variable),  color = "black", size = 2, fill = "white") 
+shapeE <- scale_shape_manual(values=c(24, 22, 21))
+jitterE <- geom_jitter(aes(shape=X), fill="white", color = "black", size = 3, pch=21, width = 0.1)
+
+scmp_A <-(c("#db782c", "#4f5084")) #"#E8BF7F"
+scmp_A1 <- scale_fill_manual(values = scmp_A)
+scmp_A2 <- scale_color_manual(values = scmp_A)
+
+colors_2026 <- c("#717C90", "#8A93A4", "#FAD6AF", "#C9A27C")
+colors_2026A <- scale_fill_manual(values = colors_2026 )
+colors_2026B <- scale_color_manual(values = colors_2026 )
+
+colors_2026_2 <- c("#4F637D", "#717C90", "#8A93A4", "#D6E3F3", "#FAD6AF", "#C9A27C")
+colors_2026C <- scale_fill_manual(values = colors_2026_2 )
+colors_2026D <- scale_color_manual(values = colors_2026_2 )
+
+colors_twpnpks <- c("#3b3440", "#442e3c", "#433550", "#423959", "#5f5671", "#87808e", "#988686", "#97665d", "#844a43", "#7a3a3c", "#6c2a31")
+colors_twpnpksA <-  scale_fill_manual(values = colors_twpnpks )
+colors_twpnpksB <- scale_color_manual(values = colors_twpnpks )
+
+colors_twpnpks_1 <- c(
+  "#412522", "#491e18", "#451f1b", "#461e19", "#58231c",  "#762a1e", "#99301c", "#95463d", "#b65c46", "#bb8262")
+colors_twpnpksC <- scale_fill_manual(values = colors_twpnpks_1 )
+colors_twpnpksD <- scale_color_manual(values = colors_twpnpks_1 )
+
+colors_twpnpks_2 <- c(
+  "#5c1b19", "#691815", "#74221d", "#832821", "#922b24",  "#9a443e", "#c86664", "#ca798a", "#cc8c73", "#c2a689")
+colors_twpnpksE <- scale_fill_manual(values = colors_twpnpks_2 )
+colors_twpnpksF <- scale_color_manual(values = colors_twpnpks_2 )
+
+colors_twpnpks_3 <- c(
+  "#4d2f25", "#573023", "#6a331f", "#7e3c1c", "#975b24",  "#a06e28", "#b99231", "#588287", "#929ac0", "#857e92")
+colors_twpnpksG <- scale_fill_manual(values = colors_twpnpks_3 )
+colors_twpnpksH <- scale_color_manual(values = colors_twpnpks_3 )
+
+colors_twpnpks_4 <- c(
+  "#7b708a", "#6a5f78", "#695f78", "#65586d", "#504448", "#664d57", "#6a5059", "#674852", "#725560",  "#806772" )
+colors_twpnpkI <- scale_fill_manual(values = colors_twpnpks_4 )
+colors_twpnpksJ <- scale_color_manual(values = colors_twpnpks_4 )
+
+colors_twpnpks_5 <- c(
+  "#41211c", "#481b15", "#551a14", "#5f1a11", "#703218", "#761f12", "#8b231c", "#934b31", "#95604d", "#a87260")
+colors_twpnpksK <- scale_fill_manual(values = colors_twpnpks_5 )
+colors_twpnpksL <- scale_color_manual(values = colors_twpnpks_5 )
+
+colors_twpnpks_6 <- c(
+  "#3c2b28", "#402924", "#492b26", "#53342c", "#6e3c27",  "#824c2f", "#915b37", "#ad8773", "#8c6a69", "#78585d")
+colors_twpnpksM <- scale_fill_manual(values = colors_twpnpks_6 )
+colors_twpnpksN <- scale_color_manual(values = colors_twpnpks_6 )
+
+colors_twpnpks_7 <- c(
+  "#5E6284", "#C08A72", "#8FA2A8", "#9C4D44", "#2F3259", "#7C232C", "#5A0F18", "#8c6a69", "#78585d")
+colors_twpnpksO <- scale_fill_manual(values = colors_twpnpks_7 )
+colors_twpnpksP <- scale_color_manual(values = colors_twpnpks_7 )
+
+colors_twpnpks_8 <- c(
+  "#8FA2A8", "#9C4D44", "#5E6284", "#2F3259", "#7C232C", "#C08A72", "#5A0F18", "#8c6a69", "#78585d")
+colors_twpnpksQ<- scale_fill_manual(values = colors_twpnpks_8 )
+colors_twpnpksR <- scale_color_manual(values = colors_twpnpks_8 )
+
+
+  
+  scale_fill_gradientn(colours = c("gray85","#9ec9cc","#387c85","#1f4e56"   ))
+  
+  scale_fill_gradientn(colours = c("gray85","#b7d4d6","#5c9ea6","#387c85","#234f55"))
+
+```
